@@ -23,7 +23,7 @@ def main() -> None:
     license: str = LICENSE.strip()
     for (root_path, _, file_names) in os.walk(os.path.dirname(os.path.realpath(__file__))):
         for file_name in file_names:
-            if not file_name.endswith('.kt'):
+            if not file_name.endswith('.java'):
                 continue
 
             file_path: str = os.path.join(root_path, file_name)

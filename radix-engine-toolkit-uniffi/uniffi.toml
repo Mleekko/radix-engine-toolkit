@@ -1,4 +1,4 @@
-[bindings.kotlin]
+[bindings.java]
 package_name = "com.radixdlt.ret"
 
 [bindings.csharp]

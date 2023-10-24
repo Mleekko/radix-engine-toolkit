@@ -1,0 +1,97 @@
+apply plugin: 'java'
+apply plugin: 'maven-publish'
+
+group = 'live.radix'
+
+description = 'The Radix Engine Toolkit (Java)'
+
+repositories {
+    mavenCentral()
+}
+
+sourceCompatibility = JavaVersion.VERSION_17
+targetCompatibility = JavaVersion.VERSION_17
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = "UTF-8"
+}
+
+tasks.withType(Test) {
+    systemProperty "file.encoding", "UTF-8"
+}
+
+tasks.withType(Javadoc) {
+    failOnError false
+    options.addStringOption('Xdoclint:none', '-quiet')
+}
+
+dependencies {
+   implementation("net.java.dev.jna:jna:5.13.0")
+}
+
+java {
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(17))
+    }
+}
+
+ext {
+    license = {
+        name = 'MIT License'
+        url = 'https://opensource.org/licenses/mit-license.php'
+    }
+}
+
+afterEvaluate {
+    java {
+        withSourcesJar()
+        withJavadocJar()
+    }
+
+    publishing {
+        repositories {
+            mavenLocal()
+        }
+        String publicationName = project.name
+        publications {
+            "$publicationName"(MavenPublication) {
+                from components.java
+
+                pom {
+                    name = "radix-engine-toolkit-java"
+                    groupId = "com.radixdlt"
+                    artifactId = "radix-engine-toolkit-java"
+                    description = project.description
+                    version = providers.gradleProperty("ret-version").getOrNull()
+                    packaging = 'jar'
+                    url = 'https://github.com/Mleekko/radix-engine-toolkit'
+
+                    scm {
+                        connection = 'scm:git:https://github.com/Mleekko/radix-engine-toolkit.git'
+                        developerConnection = 'scm:git:https://github.com/Mleekko/radix-engine-toolkit.git'
+                        url = 'https://github.com/Mleekko/radix-engine-toolkit'
+                    }
+
+                    licenses {
+                        license license
+                    }
+
+                    developers {
+                        developer {
+                            id = 'Mleekko'
+                            name = 'Mleekko'
+                            email = 'Mleekko@radix.live'
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+}
+

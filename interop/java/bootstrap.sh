@@ -1,7 +1,7 @@
 #!/bin/bash
 
-library_name="ret-kotlin"
-src=$library_name/lib/src/main/kotlin
+library_name="ret-java"
+src=$library_name/lib/src/main/java
 res=$library_name/lib/src/main/resources
 package=com/radixdlt/ret
 
